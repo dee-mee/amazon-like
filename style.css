@@ -1,0 +1,137 @@
+:root {
+    --amazon-orange: #FF9900;
+    --amazon-dark: #232F3E;
+    --amazon-light: #EAEDED;
+}
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: var(--amazon-light);
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+header {
+    background-color: var(--amazon-dark);
+    color: white;
+    padding: 0.5em;
+}
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.logo {
+    font-size: 1.5em;
+    font-weight: bold;
+    color: var(--amazon-orange);
+}
+.search-bar {
+    display: flex;
+    flex-grow: 1;
+    margin: 0 1em;
+}
+.search-bar input {
+    flex-grow: 1;
+    padding: 0.5em;
+}
+.search-bar button {
+    background-color: var(--amazon-orange);
+    border: none;
+    color: var(--amazon-dark);
+    padding: 0.5em 1em;
+    cursor: pointer;
+}
+.content-wrapper {
+    display: flex;
+    flex-grow: 1;
+}
+.sidebar {
+    width: 200px;
+    background-color: white;
+    padding: 1em;
+}
+.sidebar h3 {
+    margin-top: 0;
+}
+.sidebar ul {
+    list-style-type: none;
+    padding: 0;
+}
+.sidebar li {
+    margin-bottom: 0.5em;
+}
+.sidebar a {
+    color: var(--amazon-dark);
+    text-decoration: none;
+}
+.sidebar a:hover {
+    color: var(--amazon-orange);
+}
+main {
+    flex-grow: 1;
+    padding: 2em;
+}
+.product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 1em;
+}
+.product {
+    background-color: white;
+    border: 1px solid #ddd;
+    padding: 1em;
+    text-align: center;
+    transition: box-shadow 0.3s ease;
+}
+.product:hover {
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+.product img {
+    max-width: 100%;
+    height: 150px;
+    object-fit: contain;
+}
+.product .rating {
+    color: var(--amazon-orange);
+}
+.cart {
+    background-color: white;
+    border: 1px solid #ddd;
+    padding: 1em;
+    margin-top: 2em;
+}
+button {
+    background-color: var(--amazon-orange);
+    border: none;
+    color: var(--amazon-dark);
+    padding: 0.5em 1em;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+button:hover {
+    background-color: #e88e00;
+}
+footer {
+    background-color: var(--amazon-dark);
+    color: white;
+    text-align: center;
+    padding: 1em;
+    margin-top: auto;
+}
+#notification {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background-color: var(--amazon-orange);
+    color: white;
+    padding: 1em;
+    border-radius: 5px;
+    display: none;
+}

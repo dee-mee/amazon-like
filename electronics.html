@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Electronics - AmazonLike E-commerce Website</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">AmazonLike</div>
+            <div class="search-bar">
+                <input type="text" id="search-input" placeholder="Search for products...">
+                <button onclick="searchProducts()">Search</button>
+            </div>
+            <div class="cart-icon" onclick="toggleCart()">🛒 Cart (<span id="cart-count">0</span>)</div>
+        </nav>
+    </header>
+    <div class="content-wrapper">
+        <aside class="sidebar">
+            <h3>Categories</h3>
+            <ul>
+                <li><a href="index.html">All Products</a></li>
+                <li><a href="electronics.html">Electronics</a></li>
+                <li><a href="books.html">Books</a></li>
+                <li><a href="clothing.html">Clothing</a></li>
+                <li><a href="home.html">Home & Kitchen</a></li>
+                <li><a href="toys.html">Toys & Games</a></li>
+            </ul>
+        </aside>
+        <main>
+            <h1>Electronics</h1>
+            <div class="product-grid" id="product-grid"></div>
+            <div class="cart" id="cart" style="display: none;">
+                <h2>Shopping Cart</h2>
+                <ul id="cart-items"></ul>
+                <p>Total: $<span id="cart-total">0</span></p>
+                <button onclick="checkout()">Proceed to Checkout</button>
+            </div>
+        </main>
+    </div>
+    <div id="notification"></div>
+    <footer>
+        <p>&copy; 2024 AmazonLike. All rights reserved.</p>
+        <p>
+            <a href="#">About Us</a> | 
+            <a href="#">Contact</a> | 
+            <a href="#">Privacy Policy</a> | 
+            <a href="#">Terms of Service</a>
+        </p>
+    </footer>
+    <script>
+        const products = [
+            { id: 1, name: 'Wireless Earbuds', price: 79.99, image: '/api/placeholder/150/150', rating: 4.5, category: 'electronics' },
+            { id: 2, name: 'Smart Watch', price: 129.99, image: '/api/placeholder/150/150', rating: 4.2, category: 'electronics' },
+            { id: 3, name: 'Portable Charger', price: 39.99, image: '/api/placeholder/150/150', rating: 4.7, category: 'electronics' },
+            { id: 4, name: 'Bluetooth Speaker', price: 59.99, image: '/api/placeholder/150/150', rating: 4.3, category: 'electronics' },
+            { id: 6, name: 'Fitness Tracker', price: 89.99, image: '/api/placeholder/150/150', rating: 4.4, category: 'electronics' },
+            { id: 11, name: 'Laptop', price: 899.99, image: '/api/placeholder/150/150', rating: 4.6, category: 'electronics'},
+            { id: 12, name: 'Wireless Mouse', price: 29.99, image: '/api/placeholder/150/150', rating: 4.4, category: 'electronics' },
+            { id: 13, name: 'External SSD', price: 119.99, image: '/api/placeholder/150/150', rating: 4.8, category: 'electronics' },
+        ];
+
+        let cart = [];
+
+        function renderProducts() {
+            const productGrid = document.getElementById('product-grid');
+            productGrid.innerHTML = '';
+            const electronicsProducts = products.filter(product => product.category === 'electronics');
+            electronicsProducts.forEach(product => {
+                const productElement = document.createElement('div');
+                productElement.className = 'product';
+                productElement.innerHTML = `
+                    <img src="${product.image}" alt="${product.name}">
+                    <h3>${product.name}</h3>
+                    <p>$${product.price.toFixed(2)}</p>
+                    <div class="rating">
+                        ${'★'.repeat(Math.floor(product.rating))}${'☆'.repeat(5 - Math.floor(product.rating))}
+                        ${product.rating.toFixed(1)}
+                    </div>
+                    <button onclick="addToCart(${product.id})">Add to Cart</button>
+                `;
+                productGrid.appendChild(productElement);
+            });
+        }
+
+        function addToCart(productId) {
+            const product = products.find(p => p.id === productId);
+            cart.push(product);
+            updateCartCount();
+            renderCart();
+            showNotification(`${product.name} added to cart!`);
+        }
+
+        function renderCart() {
+            const cartItems = document.getElementById('cart-items');
+            const cartTotal = document.getElementById('cart-total');
+            cartItems.innerHTML = '';
+            let total = 0;
+            cart.forEach(item => {
+                const li = document.createElement('li');
+                li.textContent = `${item.name} - $${item.price.toFixed(2)}`;
+                cartItems.appendChild(li);
+                total += item.price;
+            });link 
+            cartTotal.textContent = total.toFixed(2);
+        }
+
+        function toggleCart() {
+            const cart = document.getElementById('cart');
+            cart.style.display = cart.style.display === 'none' ? 'block' : 'none';
+        }
+
+        function searchProducts() {
+            const searchTerm = document.getElementById('search-input').value.toLowerCase();
+            const filteredProducts = products.filter(product => 
+                product.category === 'electronics' &&
+                product.name.toLowerCase().includes(searchTerm)
+            );
+            renderFilteredProducts(filteredProducts);
+        }
+
+        function renderFilteredProducts(filteredProducts) {
+            const productGrid = document.getElementById('product-grid');
+            productGrid.innerHTML = '';
+            filteredProducts.forEach(product => {
+                const productElement = document.createElement('div');
+                productElement.className = 'product';
+                productElement.innerHTML = `
+                    <img src="${product.image}" alt="${product.name}">
+                    <h3>${product.name}</h3>
+                    <p>$${product.price.toFixed(2)}</p>
+                    <div class="rating">
+                        ${'★'.repeat(Math.floor(product.rating))}${'☆'.repeat(5 - Math.floor(product.rating))}
+                        ${product.rating.toFixed(1)}
+                    </div>
+                    <button onclick="addToCart(${product.id})">Add to Cart</button>
+                `;
+                productGrid.appendChild(productElement);
+            });
+        }
+
+        function checkout() {
+            alert('Thank you for your purchase! This is where you would normally proceed to payment.');
+            cart = [];
+            updateCartCount();
+            renderCart();
+        }
+
+        function updateCartCount() {
+            const cartCount = document.getElementById('cart-count');
+            cartCount.textContent = cart.length;
+        }
+
+        function showNotification(message) {
+            const notification = document.getElementById('notification');
+            notification.textContent = message;
+            notification.style.display = 'block';
+            setTimeout(() => {
+                notification.style.display = 'none';
+            }, 3000);
+        }
+
+        renderProducts();
+    </script>
+</body>
+</html>
